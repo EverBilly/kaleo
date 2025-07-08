@@ -1,4 +1,4 @@
-# Fase 1: Construir frontend
+# Fase 1: Construir frontendd
 FROM node:18 as frontend
 WORKDIR /frontend
 COPY frontend/ .

@@ -1,4 +1,3 @@
-# Imagen base
 FROM python:3.11-slim
 
 # Instalar dependencias necesarias
@@ -20,11 +19,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar código fuente
+# Copiar código fuente (ajustado)
 COPY . .
 
-# Servir archivos estáticos con whitenoise
-ENV PYTHONPATH=/app
+# Verificar que static/ exista
+RUN ls -la /app/static || echo "¡Carpeta static/ no encontrada!"
 
 # Entrada del contenedor
 COPY entrypoint.sh /entrypoint.sh

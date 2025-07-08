@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-l4_2=%wki=pl7w9zo=6-g(!=!scn61)%t6u+=9r&n8r@td)qcn
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.1.35',
+    'kaleo-production.up.railway.app',
 ]
 
 

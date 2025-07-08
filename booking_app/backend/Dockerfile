@@ -1,12 +1,7 @@
-# Fase 1: Construir frontendd
-FROM node:18 as frontend
-WORKDIR /frontend
-COPY frontend/ .
-RUN npm install && npm run build
-
-# Fase 2: Backend Python
+# Imagen base
 FROM python:3.11-slim
 
+# Instalar dependencias necesarias
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
@@ -18,20 +13,20 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
 
+# Directorio de trabajo
 WORKDIR /app
 
+# Copiar requirements
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar archivos estáticos del frontend
-COPY --from=frontend /frontend/dist /app/static
-
-# Copiar backend
+# Copiar código fuente
 COPY . .
 
-ENV PORT=8000
+# Servir archivos estáticos con whitenoise
 ENV PYTHONPATH=/app
 
+# Entrada del contenedor
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

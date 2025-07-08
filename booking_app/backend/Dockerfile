@@ -1,24 +1,16 @@
-# Imagen base
 FROM python:3.11-slim
 
-# Actualiza e instala dependencias del sistema necesarias
+# Dependencias básicas para desarrollo
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
         gcc \
         python3-dev \
-        pkg-config \
-        libmariadb-dev \
-        libssl-dev \
-        libffi-dev \
         zlib1g-dev \
         libpng-dev \
         libjpeg-dev && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
-
-ENV MYSQLCLIENT_CFLAGS="-I/usr/include/mariadb"
-ENV MYSQLCLIENT_LDFLAGS="-L/usr/lib/x86_64-linux-gnu -lmariadb"
 
 # Directorio de trabajo
 WORKDIR /app

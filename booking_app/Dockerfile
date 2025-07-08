@@ -17,4 +17,4 @@ COPY . .
 EXPOSE $PORT
 
 # Comando de inicio (ajusta según tu app)
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "myproject.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "booking_project.wsgi:application"]

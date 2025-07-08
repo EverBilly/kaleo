@@ -87,10 +87,10 @@ DATABASES = {
         #'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ['MYSQLDATABASE'],
-        'USER': os.environ['MYSQLUSER'],
-        'PASSWORD': os.environ['MYSQLPASSWORD'],
-        'HOST': os.environ['MYSQLHOST'],
+        'NAME': os.environ['MYSQLDATABASE', 'railway'],
+        'USER': os.environ['MYSQLUSER', 'root'],
+        'PASSWORD': os.environ['MYSQLPASSWORD', 'MfzrznkAMNdTnVwsztkteUTUZjpoyLYF'],
+        'HOST': os.environ['MYSQLHOST', 'mysql.railway.internal'],
         'PORT': os.environ.get('MYSQLPORT', '3306'),
     }
 }

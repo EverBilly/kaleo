@@ -6,6 +6,8 @@ set -e
 echo "Archivos en static/:"
 ls -R /app/static/
 
+mkdir -p staticfiles
+
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 

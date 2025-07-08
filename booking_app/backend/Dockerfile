@@ -1,3 +1,10 @@
+# Fase 1: Construir frontend
+FROM node:18 as frontend
+WORKDIR /frontend
+COPY frontend/ .
+RUN npm install && npm run build
+
+# Fase 2: Backend Python
 FROM python:3.11-slim
 
 RUN apt-get update && \
@@ -16,6 +23,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copiar archivos estáticos del frontend
+COPY --from=frontend /frontend/dist /app/static
+
+# Copiar backend
 COPY . .
 
 ENV PORT=8000

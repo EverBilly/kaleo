@@ -2,6 +2,10 @@
 
 set -e
 
+# Mostrar contenido de static/ para depuración
+echo "Archivos en static/:"
+ls -R /app/static/
+
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 

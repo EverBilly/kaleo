@@ -1,29 +1,20 @@
+# Usa una imagen oficial de Python
 FROM python:3.11-slim
 
-# Actualiza e instala dependencias del sistema necesarias
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        gcc \
-        python3-dev \
-        pkg-config \
-        libmariadb-dev && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get clean
-
-# Directorio de trabajo dentro del contenedor
+# Directorio de trabajo
 WORKDIR /app
 
-# Copiar requirements primero
+# Copiar requirements.txt primero
 COPY requirements.txt .
 
-# Instalar dependencias
+# Instalar dependencias directamente sin entorno virtual
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar resto del código
 COPY . .
 
-# Exponer puerto de la app
-EXPOSE 8000
+# Puerto dinámico asignado por Railway
+EXPOSE $PORT
 
-# Comando de inicio usando Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "booking_project.wsgi:application"]
+# Comando de inicio (ajusta según tu app)
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "myproject.wsgi:application"]

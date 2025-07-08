@@ -2,16 +2,21 @@
 
 set -e
 
-# Crear carpeta staticfiles antes de que Whitenoise la busque
+# Mostrar información del entorno
+echo "PWD: $(pwd)"
+echo "Contenido actual del directorio:"
+ls -la /app/
+
+# Crear carpeta staticfiles antes de cualquier cosa
 mkdir -p /app/staticfiles
 
 # Mostrar contenido de static/ para depuración
-echo "Archivos en static/:"
-ls -R /app/static/
+echo "Archivos en /app/static:"
+find /app/static -type f | sort
 
 # Recolectar archivos estáticos
 echo "Collecting static files..."
-python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput --verbosity=3
 
 # Aplicar migraciones
 echo "Applying migrations..."

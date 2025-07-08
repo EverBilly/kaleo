@@ -2,26 +2,31 @@
 
 set -e
 
-# Mostrar información del entorno
 echo "PWD: $(pwd)"
-echo "Contenido actual del directorio:"
+echo "Contenido de /app:"
 ls -la /app/
 
-# Crear carpeta staticfiles antes de cualquier cosa
+# Verificar que manage.py exista
+if [ ! -f "/app/manage.py" ]; then
+    echo "❌ ¡Error!: manage.py no encontrado en /app"
+    exit 1
+fi
+
+# Crear carpeta staticfiles
 mkdir -p /app/staticfiles
 
-# Mostrar contenido de static/ para depuración
+# Mostrar contenido de static/
 echo "Archivos en /app/static:"
-find /app/static -type f | sort
+find /app/static -type f | sort || echo "No hay archivos en static/"
 
 # Recolectar archivos estáticos
-echo "Collecting static files..."
+echo "🔄 Ejecutando collectstatic..."
 python manage.py collectstatic --noinput --verbosity=3
 
 # Aplicar migraciones
-echo "Applying migrations..."
+echo "🔄 Ejecutando migraciones..."
 python manage.py migrate --noinput
 
 # Iniciar servidor
-echo "Starting server..."
+echo "✅ Iniciando servidor Gunicorn..."
 exec gunicorn --bind 0.0.0.0:$PORT booking_project.wsgi:application
